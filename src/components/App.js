@@ -5,7 +5,7 @@ import EntryForm from './EntryForm'
 export default class App extends Component {
     constructor(props) {
       super(props)
-      this.newEntry = {label: "", value: -1}
+      this.newEntry = {label: "", value: 0}
       this.state = {
         pieData: [{label: 'Margarita', value: 20.0},
           {label: 'John', value: 55.0},
@@ -30,9 +30,14 @@ export default class App extends Component {
         sum+=data[i].value
       }
       sum+=newEntry.value
+      console.log(sum)
       if (sum > 100) {
-        for (let i = 0; i < data.length; i++)
+        for (let i = 0; i < data.length; i++) {
           data[i].value*= (0.01*(100-newEntry.value))
+          if (data[i].value % 1 != 0) {
+            data[i].value = parseFloat(data[i].value.toFixed(2))
+          }
+        }
       }
       data.push({'label': newEntry.label, 'value': newEntry.value})
       return data

@@ -2,15 +2,12 @@ import React, {Component} from 'react'
 const PieChart = require('react-d3/piechart').PieChart;
 
 export default class EntryForm extends Component {
-    constructor(props) {
-      super(props)
-    }
 
     update = (e) => {
       let value = e.target.value
       if (e.target.id== 'value')
         value = parseFloat(value) 
-
+      console.log(this.props)
       this.props.onUpdate(e.target.id, value)
      }
     render () {
