@@ -1,15 +1,21 @@
 import React, {Component} from 'react'
-const PieChart = require('react-d3/piechart').PieChart;
+var PieChart = require('react-d3/piechart').PieChart;
+var PieChart = require('rd3/build/cjs/piechart').PieChart
+var tooltip = require("react-d3")
+console.log(tooltip)
 import EntryForm from './EntryForm'
 import FormInput from './FormInput'
+
 export default class App extends Component {
     constructor(props) {
       super(props)
       this.newEntry = {label: "", value: 0}
       this.state = {
-        pieData: [{label: 'Margarita', value: 20.0},
-          {label: 'John', value: 55.0},
-          {label: 'Tim', value: 25.0 }],
+        chartWidth: 500,
+        chartHeight: 500,
+        pieData: [{label: 'Margarita', value: 20.0, index: 0},
+          {label: 'John', value: 55.0, index: 1},
+          {label: 'Tim', value: 25.0 , index: 2}],
       }
 
     }
@@ -47,20 +53,29 @@ export default class App extends Component {
       data.push({'label': newEntry.label, 'value': newEntry.value})
       return data
     }
+    compare = (a,b) => {
+      return b.value <=a.value
+      console.log(data)
+    }
 
     render () {
+        this.state.pieData.sort(this.compare)
         return (
           <div>
             <h1>Hello PieChart!</h1>
               <PieChart
                 data={this.state.pieData}
-                width={400}
-                height={400}
-                radius={100}
-                innerRadius={20}
+                width={this.state.chartWidth}
+                height={this.state.chartHeight}
+                radius={Math.min(this.state.chartWidth, this.state.chartHeight - 120) / 3}
+                innerRadius={40}
                 title="This is my Pie Chart"
+                colors = {d3.scale.category10()}
+                showOuterLabels={true}
+                showInnerLabels={true}
+                sectorBorderColor={'black'}
               />
-            <EntryForm onSubmit={this.onSubmit} >
+            <EntryForm onSubmit={this.onSubmit} heading={'Add new entry'} >
               <FormInput type="text" id="label" name="Entry" onChange={this.onInputUpdate} />
               <FormInput type="text" id="value" name="Value" onChange={this.onInputUpdate} />
             </EntryForm>
