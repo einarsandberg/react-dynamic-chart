@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 const PieChart = require('react-d3/piechart').PieChart;
 export default class EntryForm extends Component {
     render () {
-
         return (
           <div>
             <h1> {this.props.heading} </h1>

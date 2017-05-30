@@ -23,7 +23,11 @@ export default class FormField extends Component {
         return (
           <div>
               {this.props.name}
-              <input type={this.props.type} id={this.props.id} onChange={this.validate} />
+              <input placeholder={this.props.placeholder}
+              	type={this.props.type} 
+              	id={this.props.id} 
+              	onChange={this.validate} 
+              />
           </div>
         );
     }

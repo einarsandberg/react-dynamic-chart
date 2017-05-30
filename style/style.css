@@ -1,5 +1,25 @@
-.pie-container {
+#root {
+	padding-left: 5%;	
+}
+#container {
 	display: flex;
-	flex-direction: row;
-	align-items: flex-start;
+	flex-direction: column;
+	width:100%;
+	align-items: center;
+	justify-content: center;
+}
+#pie-container{
+	width: 45%;
+	padding: 5%;
+	display:flex;
+	flex-direction: column;
+	border: 0.5vw solid black;
+	align-items: center;
+	justify-content: center;
+
+}
+#entry-form {
+}
+#pie {
+	background: black;
 }
