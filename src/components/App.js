@@ -1,8 +1,6 @@
 import React, {Component} from 'react'
 var PieChart = require('react-d3/piechart').PieChart;
 var PieChart = require('rd3/build/cjs/piechart').PieChart
-var tooltip = require("react-d3")
-console.log(tooltip)
 import EntryForm from './EntryForm'
 import FormInput from './FormInput'
 
@@ -16,20 +14,22 @@ export default class App extends Component {
         pieData: [{label: 'Margarita', value: 20.0, index: 0},
           {label: 'John', value: 55.0, index: 1},
           {label: 'Tim', value: 25.0 , index: 2}],
+        newEntry: {label: "", value: 0}
+
       }
 
     }
     onInputUpdate = (e) => {
+      console.log("hejjjj")
       let value = e.target.value
       if (e.target.id== 'value')
         value = parseFloat(value) 
       this.newEntry[e.target.id] = value
-      console.log(this.newEntry)
     }
 
-    onSubmit = () => {
+    onSubmitEntry = () => {
      this.setState({
-        pieData: this.calculatePercent(this.state.pieData, this.newEntry)
+        pieData: this.calculatePercent(this.state.pieData, this.newEntry).sort(this.compare)
       })
     }
     calculatePercent = (data, newEntry) => {
@@ -55,30 +55,30 @@ export default class App extends Component {
     }
     compare = (a,b) => {
       return b.value <=a.value
-      console.log(data)
     }
 
     render () {
-        this.state.pieData.sort(this.compare)
         return (
           <div>
             <h1>Hello PieChart!</h1>
+            <div className="pie-container">
               <PieChart
                 data={this.state.pieData}
                 width={this.state.chartWidth}
                 height={this.state.chartHeight}
-                radius={Math.min(this.state.chartWidth, this.state.chartHeight - 120) / 3}
+                radius={Math.min(this.state.chartWidth, this.state.chartHeight - 120) / 2}
                 innerRadius={40}
-                title="This is my Pie Chart"
                 colors = {d3.scale.category10()}
                 showOuterLabels={true}
                 showInnerLabels={true}
                 sectorBorderColor={'black'}
               />
-            <EntryForm onSubmit={this.onSubmit} heading={'Add new entry'} >
-              <FormInput type="text" id="label" name="Entry" onChange={this.onInputUpdate} />
-              <FormInput type="text" id="value" name="Value" onChange={this.onInputUpdate} />
+            <EntryForm onSubmit={this.onSubmitEntry} heading='Add new entry' submitBtnText='Add new pie entry' >
+              <FormInput type="text" id="label" name="Entry" onChange={this.onInputUpdate}/>
+              <FormInput type="text" id="value" name="Value" onChange={this.onInputUpdate} ensure="number"/>
             </EntryForm>
+          </div>
+
         </div>
         );
     }

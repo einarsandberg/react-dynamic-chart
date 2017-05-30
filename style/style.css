@@ -1,4 +1,5 @@
-.chart {
-	resize: both;
-	overflow:auto;
+.pie-container {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
 }
