@@ -37,13 +37,13 @@ export default class App extends Component {
       if (newEntry.value >= 100) {
         return [{label: newEntry.label, value: 100}]
       }
-      // Sum data values
-      let sum = data.reduce((a, b) => a + b.value, 0) + newEntry.value
+      const sum = data.reduce((acc, item) => acc + item.value, newEntry.value)
       // If sum > 100, calculate new values for old entries.
       // The new entry will be the input value, i.e no recalculation
       if (sum > 100) {
         data.map((item) => {
           item.value *= (0.01*(100-newEntry.value))
+          // If not integer -> fixed num of decimals
           if (item.value % 1 != 0)
             item.value = parseFloat(item.value.toFixed(2))
           return item;

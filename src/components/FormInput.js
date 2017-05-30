@@ -27,7 +27,7 @@ export default class FormField extends Component {
               	type={this.props.type} 
               	id={this.props.id} 
               	onChange={this.validate} 
-              />
+              	/>
           </div>
         );
     }
