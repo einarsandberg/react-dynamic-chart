@@ -1,4 +1,5 @@
 import React from 'react'
+
 const EntryForm = (props) => (
   <div>
     <h1> {props.heading} </h1>

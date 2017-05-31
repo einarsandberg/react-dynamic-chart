@@ -51,20 +51,20 @@ export default class App extends Component {
     }
 
     recalculate = (data, newEntry) => {
-      
       if (newEntry.value >= 100 || (newEntry.value<100 && data.length == 1 &&
         data[0].label == newEntry.label)) {
         return [{label: newEntry.label, value: 100}]
       }
-
+      // If updating entry, remove old entry
       data = data.filter(a =>  a.label !== newEntry.label)
-      let sum = data.reduce((acc, item) => acc + item.value, 0)
-      // Recalculate existing items. Will not change unless item is
+
+      const sum = data.reduce((acc, item) => acc + item.value, 0)
+      // Recalculate values
+      console.log(sum)
       data = data.map((item) => {
+        // If an entry has been deleted, i.e updated -> sum < 100 -> value should change.
         item.value = (item.value/sum)*100
-        return item
-      })
-      data = data.map((item) => {
+        // Calculate new value with newEntry info.
         item.value *= (0.01*(100-newEntry.value))
         // If not integer -> fixed num of decimals
         if (item.value % 1 !== 0)
