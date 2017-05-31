@@ -77,40 +77,40 @@ export default class App extends Component {
     }
 
     render () {
-        return (
-          <div>
-            <h1 id="root-heading">Hello PieChart!</h1>
-            <div id="container">
-              <div id="pie-container">
-                <div id="pie">
-                  <PieChart
-                    data={this.state.pieData}
-                    width={this.chartConfig.width}
-                    height={this.chartConfig.height}
-                    radius={this.chartConfig.radius}
-                    innerRadius={this.chartConfig.innerRadius}
-                    colors = {this.chartConfig.colors}
-                    showOuterLabels={this.chartConfig.showOuterLabels}
-                    showInnerLabels={this.chartConfig.showInnerLabels}
-                    sectorBorderColor={this.chartConfig.sectorBorderColor}
-                  />
-                </div>
-                <EntryForm onSubmit={this.onSubmitEntry} heading="Add or update entry" submitBtnText="Submit" 
-                  entryMsg={this.state.entryMsg}>
-                  <FormInput placeholder="Jane" 
-                    type="text" id="label" 
-                    name="Entry " 
-                    onChange={this.onInputUpdate}
-                  />
-                  <FormInput placeholder="20" 
-                    type="text" id="value" 
-                    name="Value " 
-                    onChange={this.onInputUpdate} 
-                  />
-                </EntryForm>
-            </div>
+      return (
+        <div>
+          <h1 id="root-heading">Hello PieChart!</h1>
+          <div id="container">
+            <div id="pie-container">
+              <div id="pie">
+                <PieChart
+                  data={this.state.pieData}
+                  width={this.chartConfig.width}
+                  height={this.chartConfig.height}
+                  radius={this.chartConfig.radius}
+                  innerRadius={this.chartConfig.innerRadius}
+                  colors = {this.chartConfig.colors}
+                  showOuterLabels={this.chartConfig.showOuterLabels}
+                  showInnerLabels={this.chartConfig.showInnerLabels}
+                  sectorBorderColor={this.chartConfig.sectorBorderColor}
+                />
+              </div>
+              <EntryForm onSubmit={this.onSubmitEntry} heading="Add or update entry" submitBtnText="Submit" 
+                entryMsg={this.state.entryMsg}>
+                <FormInput placeholder="Jane" 
+                  type="text" id="label" 
+                  name="Entry " 
+                  onChange={this.onInputUpdate}
+                />
+                <FormInput placeholder="20" 
+                  type="text" id="value" 
+                  name="Value " 
+                  onChange={this.onInputUpdate} 
+                />
+              </EntryForm>
           </div>
         </div>
-        );
+      </div>
+      );
     }
 }
