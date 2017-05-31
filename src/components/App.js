@@ -22,7 +22,7 @@ export default class App extends Component {
         pieData: [{label: 'Margarita', value: 20.0},
           {label: 'John', value: 55.0},
           {label: 'Tim', value: 25.0}],
-        entryMsg: ""
+        entryMsg: "",
       }
     }
     onInputUpdate = (e) => {
@@ -34,9 +34,9 @@ export default class App extends Component {
 
     onSubmitEntry = () => {
       if (this.isEntryValid()) {
-       this.setState({
+        this.setState({
           pieData: this.recalculate(this.state.pieData, this.newEntry).sort(this.compare),
-          entryMsg: ' Pie updated!'
+          entryMsg: ' Pie updated!',
         })
       }
       else {
@@ -47,13 +47,16 @@ export default class App extends Component {
     }
     isEntryValid = () => {
       if ((this.newEntry.label.length > 0) && (typeof this.newEntry.value === 'number') &&
-        (this.newEntry.value) > 0) return true;
+        (this.newEntry.value) > 0) return true; 
     }
 
     recalculate = (data, newEntry) => {
-      // Remove all other items if new entry is >= 100%
-      if (newEntry.value >= 100)
+      
+      if (newEntry.value >= 100 || (newEntry.value<100 && data.length == 1 &&
+        data[0].label == newEntry.label)) {
         return [{label: newEntry.label, value: 100}]
+      }
+
       data = data.filter(a =>  a.label !== newEntry.label)
       let sum = data.reduce((acc, item) => acc + item.value, 0)
       // Recalculate existing items. Will not change unless item is
@@ -78,9 +81,18 @@ export default class App extends Component {
 
     render () {
       return (
-        <div>
-          <h1 id="root-heading">Hello PieChart!</h1>
-          <div id="container">
+        <div id="container">
+          <div id="container-left">
+            <h1 id="main-heading">Hello PieChart!</h1>
+              <p className="main-text"> Use the form to add an entry or to update an existing entry.
+              If adding an entry with a value >100, all existing entries will be removed
+              and replaced with the new entry with value 100 %.</p>
+
+              <p className="main-text">
+              If the pie sum is > 100, the entries will be recalculated. However, the new entry will have the value as specified.
+              If input is invalid, the entry will not be added.</p>
+          </div>
+          <div id="container-right">
             <div id="pie-container">
               <div id="pie">
                 <PieChart
