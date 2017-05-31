@@ -1,4 +1,5 @@
-#root {
+#root-heading {
+	margin-left:5%;
 }
 #container {
 	display: flex;
@@ -14,8 +15,6 @@
 	align-items: center;
 	justify-content: center;
 
-}
-#entry-form {
 }
 #pie {
 	border-bottom: 0.2vw solid black;

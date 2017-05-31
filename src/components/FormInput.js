@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-const PieChart = require('react-d3/piechart').PieChart;
 
 export default class FormField extends Component {
 
@@ -17,18 +16,17 @@ export default class FormField extends Component {
 				this.props.onChange(e)
 			}
 		}
-
 	}
-    render () {
-        return (
-          <div>
-              {this.props.name}
-              <input placeholder={this.props.placeholder}
-              	type={this.props.type} 
-              	id={this.props.id} 
-              	onChange={this.validate} 
-              	/>
-          </div>
+  render () {
+    return (
+      <div>
+        {this.props.name}
+        <input placeholder={this.props.placeholder}
+       		type={this.props.type} 
+          id={this.props.id} 
+          onChange={this.validate} 
+        />
+     	</div>
         );
     }
 }

@@ -8,18 +8,21 @@ export default class App extends Component {
     constructor(props) {
       super(props)
       this.newEntry = {label: "", value: 0}
-      this.chartSize = {
+      this.chartConfig = {
         height: 300,
         width: 400,
         radius: 100,
-        innerRadius: 20
-      }
+        innerRadius: 20,
+        showOuterLabels: true,
+        showInnerLabels: true,
+        colors: d3.scale.category10(),
+        sectorBorderColor: 'black'
+    }
       this.state = {
         pieData: [{label: 'Margarita', value: 20.0},
           {label: 'John', value: 55.0},
           {label: 'Tim', value: 25.0}],
       }
-
     }
     onInputUpdate = (e) => {
       let value = e.target.value
@@ -43,13 +46,11 @@ export default class App extends Component {
         return a.label != newEntry.label
       })
       let sum = data.reduce((acc, item) => acc + item.value, 0)
-      console.log(sum)
       // Recalculate existing items. Will not change unless item is
       data = data.map((item) => {
         item.value = (item.value/sum)*100
         return item
       })
-      console.log(data)
       data = data.map((item) => {
         item.value *= (0.01*(100-newEntry.value))
         // If not integer -> fixed num of decimals
@@ -68,41 +69,37 @@ export default class App extends Component {
     render () {
         return (
           <div>
-            <h1>Hello PieChart!</h1>
+            <h1 id="root-heading">Hello PieChart!</h1>
             <div id="container">
               <div id="pie-container">
                 <div id="pie">
                   <PieChart
                     data={this.state.pieData}
-                    width={this.chartSize.width}
-                    height={this.chartSize.height}
-                    radius={this.chartSize.radius}
-                    innerRadius={this.chartSize.innerRadius}
-                    colors = {d3.scale.category10()}
-                    showOuterLabels={true}
-                    showInnerLabels={true}
-                    sectorBorderColor={'black'}
+                    width={this.chartConfig.width}
+                    height={this.chartConfig.height}
+                    radius={this.chartConfig.radius}
+                    innerRadius={this.chartConfig.innerRadius}
+                    colors = {this.chartConfig.colors}
+                    showOuterLabels={this.chartConfig.showOuterLabels}
+                    showInnerLabels={this.chartConfig.showInnerLabels}
+                    sectorBorderColor={this.chartConfig.sectorBorderColor}
                   />
                 </div>
-                <div id="entry-form">
-                  <EntryForm onSubmit={this.onSubmitEntry} heading="Add or update entry" submitBtnText="Submit" >
-                    <FormInput placeholder="Jane" 
-                      type="text" id="label" 
-                      name="Entry " 
-                      onChange={this.onInputUpdate}
-                    />
-                    <FormInput placeholder="20" 
-                      type="text" id="value" 
-                      name="Value " 
-                      onChange={this.onInputUpdate} 
-                      ensure="number"
-                    />
-                  </EntryForm>
-                </div>
-
+                <EntryForm onSubmit={this.onSubmitEntry} heading="Add or update entry" submitBtnText="Submit" >
+                  <FormInput placeholder="Jane" 
+                    type="text" id="label" 
+                    name="Entry " 
+                    onChange={this.onInputUpdate}
+                  />
+                  <FormInput placeholder="20" 
+                    type="text" id="value" 
+                    name="Value " 
+                    onChange={this.onInputUpdate} 
+                    ensure="number"
+                  />
+                </EntryForm>
             </div>
           </div>
-
         </div>
         );
     }
