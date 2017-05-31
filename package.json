@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "babel-preset-stage-1": "^6.1.18",
+    "rd3": "^0.7.4",
     "react": "15.4.0",
     "react-d3": "^0.4.0",
     "react-dom": "^15.5.4"
