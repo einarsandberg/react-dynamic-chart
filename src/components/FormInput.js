@@ -1,32 +1,12 @@
-import React, {Component} from 'react'
-
-export default class FormField extends Component {
-
-	validate = (e) => {
-		if(this.props.ensure == undefined)
-			this.props.onChange(e)
-
-		else if (this.props.ensure == "number") {
-			if (!isNaN(parseFloat(e.target.value))) {
-				this.props.onChange(e)
-			}
-		}
-		else if (this.props.ensure == "string") {
-			if (isNaN(parseFloat(e.target.value))) {
-				this.props.onChange(e)
-			}
-		}
-	}
-  render () {
-    return (
-      <div>
-        {this.props.name}
-        <input placeholder={this.props.placeholder}
-       		type={this.props.type} 
-          id={this.props.id} 
-          onChange={this.validate} 
-        />
-     	</div>
-        );
-    }
-}
+import React from 'react'
+const FormInput = (props) => (
+  <div>
+    {props.name}
+    <input placeholder={props.placeholder}
+      type={props.type} 
+      id={props.id} 
+      onChange={props.onChange} 
+    />
+  </div>
+)
+export default FormInput;

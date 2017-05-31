@@ -22,6 +22,7 @@ export default class App extends Component {
         pieData: [{label: 'Margarita', value: 20.0},
           {label: 'John', value: 55.0},
           {label: 'Tim', value: 25.0}],
+        entryMsg: ""
       }
     }
     onInputUpdate = (e) => {
@@ -32,19 +33,28 @@ export default class App extends Component {
     }
 
     onSubmitEntry = () => {
-     this.setState({
-        pieData: this.recalculate(this.state.pieData, this.newEntry).sort(this.compare)
-      })
+      if (this.isEntryValid()) {
+       this.setState({
+          pieData: this.recalculate(this.state.pieData, this.newEntry).sort(this.compare),
+          entryMsg: ' Pie updated!'
+        })
+      }
+      else {
+        this.setState({
+          entryMsg: ' Invalid input.'
+        })
+      }
+    }
+    isEntryValid = () => {
+      if ((this.newEntry.label.length > 0) && (typeof this.newEntry.value === 'number') &&
+        (this.newEntry.value) > 0) return true;
     }
 
     recalculate = (data, newEntry) => {
-
       // Remove all other items if new entry is >= 100%
       if (newEntry.value >= 100)
         return [{label: newEntry.label, value: 100}]
-      data = data.filter(function(a) {
-        return a.label != newEntry.label
-      })
+      data = data.filter(a =>  a.label !== newEntry.label)
       let sum = data.reduce((acc, item) => acc + item.value, 0)
       // Recalculate existing items. Will not change unless item is
       data = data.map((item) => {
@@ -54,7 +64,7 @@ export default class App extends Component {
       data = data.map((item) => {
         item.value *= (0.01*(100-newEntry.value))
         // If not integer -> fixed num of decimals
-        if (item.value % 1 != 0)
+        if (item.value % 1 !== 0)
           item.value = parseFloat(item.value.toFixed(2))
         return item;
       })
@@ -85,7 +95,8 @@ export default class App extends Component {
                     sectorBorderColor={this.chartConfig.sectorBorderColor}
                   />
                 </div>
-                <EntryForm onSubmit={this.onSubmitEntry} heading="Add or update entry" submitBtnText="Submit" >
+                <EntryForm onSubmit={this.onSubmitEntry} heading="Add or update entry" submitBtnText="Submit" 
+                  entryMsg={this.state.entryMsg}>
                   <FormInput placeholder="Jane" 
                     type="text" id="label" 
                     name="Entry " 
@@ -95,7 +106,6 @@ export default class App extends Component {
                     type="text" id="value" 
                     name="Value " 
                     onChange={this.onInputUpdate} 
-                    ensure="number"
                   />
                 </EntryForm>
             </div>
